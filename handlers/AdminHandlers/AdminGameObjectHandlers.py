@@ -208,7 +208,7 @@ class AdminCreateHandler(BaseHandler):
                 corp = Corporation.by_uuid(corp_uuid)
                 level = GameLevel.by_number(game_level)
                 box = Box(corporation_id=corp.id, game_level_id=level.id)
-                box.Challenge
+                box.challenge = challenge
                 box.name = self.get_argument("name", "")
                 box.description = self.get_argument("description", "")
                 box.flag_submission_type = FlagsSubmissionType[

@@ -201,7 +201,7 @@ class Box(DatabaseObject):
 
     @property 
     def challenge(self):
-        return self.challenge
+        return self._challenge
 
 
     @name.setter
@@ -460,6 +460,7 @@ class Box(DatabaseObject):
             "corporation": self.corporation.uuid,
             "category": category,
             "operating_system": self.operating_system,
+            "challenge": self.challenge,
             "description": self._description,
             "capture_message": self.capture_message,
             "difficulty": self.difficulty,

@@ -39,6 +39,7 @@ from libs.WebhookHelpers import *
 from models import chatsession, dbsession
 from models.User import User
 
+from models.Challenges import Challenges
 try:
     from urllib.parse import urlparse
 except ImportError:
@@ -256,6 +257,7 @@ class BaseHandler(RequestHandler):
         if not self.application.settings["game_started"]:
             logging.info("The game is about to begin, good hunting!")
             self.application.settings["game_started"] = True
+            Challenges.startChallenges()
             if self.config.use_bots:
                 self.application.settings["score_bots_callback"].start()
             # Fire game start webhook
@@ -265,7 +267,9 @@ class BaseHandler(RequestHandler):
         """Stop the game and all callbacks"""
         if self.application.settings["game_started"]:
             logging.info("The game is stopping ...")
+            Challenges.killChallenges()
             self.application.settings["game_started"] = False
+            # add stop challenges here!!
             if self.application.settings["score_bots_callback"]._running:
                 self.application.settings["score_bots_callback"].stop()
             # Fire game stop webhook
