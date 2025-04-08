@@ -13,6 +13,7 @@
 {% from models.GameLevel import GameLevel %}
 {% from models.Category import Category %}
 {% from models.Corporation import Corporation %}
+{% from models.Challenges import Challenges %}
 {% from libs.XSSImageCheck import filter_avatars %}
 {% from tornado.options import options %}
 {% set avatars = filter_avatars("box") %}
@@ -164,6 +165,21 @@
                            data-content="{{_('This is the amount awarded for completion of the box.')}}">
                 </div>
             </div>
+
+            <div class="control-group">
+                <label class="control-label" for="challenge">Challenge</label>
+                <div class="controls">
+                    <select id="challenge" name="challenge"
+                            rel="popover"
+                            data-original-title="{{_('Challenge')}}"
+                            data-content="{{_('Type of challenge for user?')}}">
+                        {% for challenge in Challenges.getChallenges() %}
+                        <option value="{{ challenge }}">{% if challenge != "" %}{{ challenge }}{% else %}({{_("No name")}}){% end %}</option>
+                        {% end %}
+                    </select>
+                </div>
+            </div>
+
             <div class="control-group">
                 <label class="control-label" for="description">{{_("Description")}}</label>
                 <div class="controls">

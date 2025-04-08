@@ -189,6 +189,7 @@ class AdminCreateHandler(BaseHandler):
         try:
             game_level = self.get_argument("game_level", "")
             corp_uuid = self.get_argument("corporation_uuid", "")
+            challenge = self.get_argument("challenge", "")
             if Box.by_name(self.get_argument("name", "")) is not None:
                 raise ValidationError("Box name already exists")
             elif GameLevel.by_number(game_level) is None:
@@ -207,6 +208,7 @@ class AdminCreateHandler(BaseHandler):
                 corp = Corporation.by_uuid(corp_uuid)
                 level = GameLevel.by_number(game_level)
                 box = Box(corporation_id=corp.id, game_level_id=level.id)
+                box.challenge = challenge
                 box.name = self.get_argument("name", "")
                 box.description = self.get_argument("description", "")
                 box.flag_submission_type = FlagsSubmissionType[

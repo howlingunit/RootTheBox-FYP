@@ -8,7 +8,7 @@ python-binary-memcached; python_version>='3.0'
 python-dateutil
 defusedxml
 netaddr
-nose
+nose-py3
 future
 python-resize-image
 sqlalchemy==1.*

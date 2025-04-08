@@ -79,6 +79,7 @@ class Box(DatabaseObject):
     _value = Column(Integer, nullable=True)
     _locked = Column(Boolean, default=False, nullable=False)
     _order = Column(Integer, nullable=True, index=True)
+    _challenge = Column(Unicode(32))
 
     garbage = Column(
         String(32),
@@ -198,11 +199,20 @@ class Box(DatabaseObject):
     def name(self):
         return self._name
 
+    @property 
+    def challenge(self):
+        return self._challenge
+
+
     @name.setter
     def name(self, value):
         if not 3 <= len(str(value)) <= 32:
             raise ValidationError("Name must be 3 - 32 characters")
         self._name = str(value)
+
+    @challenge.setter
+    def challenge(self, value):
+        self._challenge = str(value)
 
     @property
     def order(self):
@@ -450,6 +460,7 @@ class Box(DatabaseObject):
             "corporation": self.corporation.uuid,
             "category": category,
             "operating_system": self.operating_system,
+            "challenge": self.challenge,
             "description": self._description,
             "capture_message": self.capture_message,
             "difficulty": self.difficulty,
