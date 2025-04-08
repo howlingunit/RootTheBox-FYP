@@ -40,8 +40,6 @@ class Challenges:
         "flag": flaglist[0].token
       }
       req.append(challenge)
-      # problem for next time:
-      # insert the ip addrs
       
 
       
@@ -51,9 +49,6 @@ class Challenges:
     r = requests.post(f'http://{cls.challenge_api}/create-challenges', json=req)
     logging.info(f"POST response:{r.status_code}, {r.text}")
     res = r.json()
-
-    print(res)
-    print(res[0]['Name'])
 
     for i in res:
       ip = IpAddress(box_id=i['Name'], address=i['Ip'])
@@ -70,9 +65,19 @@ class Challenges:
 
   @classmethod
   def killChallenges(cls):
-    r= requests.delete(f'http://{cls.challenge_api}/remove-challenges')
+    r = requests.delete(f'http://{cls.challenge_api}/remove-challenges')
   
   
     logging.info(f"DELETE response:{r.status_code}, {r.text}")
+    
+    res = r.json()
+    if not res:
+      return
 
+    for i in res:
+      ip = IpAddress.by_address(i['Ip'])
+      if ip is not None:
+          logging.info("Deleted IP address: '%s'" % str(ip))
+          cls.dbsession.delete(ip)
+          cls.dbsession.commit()
 
