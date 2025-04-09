@@ -81,6 +81,7 @@ class User(DatabaseObject):
     _email = Column(Unicode(64), unique=False, nullable=True)
     _password = Column("password", String(64))
     _bank_password = Column("bank_password", String(128))
+    _platform = Column(String(80))
     _notes = Column(Unicode(512))
     _expire = Column(DateTime, default=None, nullable=True)
     money = Column(Integer, default=0, nullable=False)
@@ -186,6 +187,14 @@ class User(DatabaseObject):
     def ranks(cls):
         """Returns a list of all objects in the database"""
         return dbsession.query(cls).filter_by(_locked=0).order_by(desc(cls.money)).all()
+
+    @property
+    def platform(self):
+        return self._platform
+    
+    @platform.setter
+    def platform(self, value):
+        self._platform = value
 
     @property
     def password(self):
