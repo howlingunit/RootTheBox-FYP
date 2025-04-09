@@ -254,6 +254,28 @@
 
     <div class="span5 well" style="width: 46%;">
         <h2>
+            <i class="fa fa-group"></i>
+            {{ _("Platform information") }}
+        </h2>
+        <hr>      
+        <div class="row">
+            <div class="span1 offset1" style="text-align: center; padding-top: 5px;">
+                <i class="fa fa-key" style="font-size: 180%;"></i>
+            </div>
+            {% if game_started %}
+            <div class="span7 msgdescription">
+                    {{ user.platform }}<br>{{ _("Log into this kali vm") }}.
+            </div>
+            {% else %}
+            <div class="span7 msgdescription">
+                {{ _("Waiting for the game to start...") }}.
+            </div>
+            {% end %}
+        </div>
+    </div>
+
+    <div class="span5 well" style="width: 46%;">
+        <h2>
             <i class="fa fa-flag"></i> 
             {% if options.teams %}{{ _("Team") }} {% end %}{{ _("Mission Progress") }}
         </h2>

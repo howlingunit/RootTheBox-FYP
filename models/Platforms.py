@@ -51,8 +51,6 @@ class Platforms:
 
     for i in res:
       user = User.by_uuid(i['Name'])
-      print(user)
-      print(i['Name'])
       if user is not None:
         user.platform = ''
 

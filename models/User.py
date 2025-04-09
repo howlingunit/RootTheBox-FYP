@@ -199,7 +199,6 @@ class User(DatabaseObject):
     @property
     def password(self):
         return self._password
-    
 
     @password.setter
     def password(self, value):
