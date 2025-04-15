@@ -18,6 +18,7 @@
 {% from tornado.options import options %}
 {% from libs.XSSImageCheck import filter_avatars %}
 {% from models.Box import Box %}
+{% from models.Team import Team %}
 {% from models.GameLevel import GameLevel %}
 {% from models.Flag import Flag, FLAG_TYPES %}
 {% from models.Flag import FLAG_CHOICE %}
@@ -1039,16 +1040,19 @@
                                                         <th>{{_("Address")}}</th>
                                                         <th>{{_("IP Version")}}</th>
                                                         <th>{{_("Visible")}}</th>
+                                                        <th>{{_("Team")}}</th>
                                                         <th><!-- Delete --></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {% for index, ip in enumerate(box.ip_addresses) %}
+                                                        {% set teamName = Team.by_uuid(ip.team_id) %}
                                                         <tr>
                                                             <td>{{ index + 1 }}</td>
                                                             <td>{{ ip.address }}</td>
                                                             <td>{{ ip.version }}</td>
                                                             <td>{% if ip.visible %} {{_("Yes")}} {% else %} {{_("No")}} {% end %}</td>
+                                                            <td>{% if teamName %} {{ teamName.name }} {% else %} {{_("No Team")}} {% end %}</td>
                                                             <td class="shortcolumn">
                                                                 <a id="delete-ip-address-button-{{ ip.uuid }}" class="btn btn-danger btn-mini" data-toggle="modal" href="#delete-ip-address-modal" data-uuid="{{ ip.uuid }}">
                                                                     <i class="fa fa-fw fa-times-circle-o"></i>
