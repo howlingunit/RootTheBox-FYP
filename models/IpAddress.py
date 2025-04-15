@@ -39,6 +39,7 @@ class IpAddress(DatabaseObject):
     uuid = Column(String(36), unique=True, nullable=False, default=lambda: str(uuid4()))
 
     box_id = Column(Integer, ForeignKey("box.id"), nullable=False)
+    team_id = Column(String(36))
     _address = Column(String(80))
     _ip_address = None
     visible = Column(Boolean, default=True)
@@ -47,6 +48,11 @@ class IpAddress(DatabaseObject):
     def all(cls):
         """Returns a list of all objects in the database"""
         return dbsession.query(cls).all()
+
+    @classmethod
+    def by_team(cls, team):
+        """Returns a list of all objects in the database"""
+        return dbsession.query(cls).filter_by(team_id=team).first()
 
     @classmethod
     def by_id(cls, _id):

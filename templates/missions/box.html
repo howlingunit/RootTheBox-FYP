@@ -425,16 +425,20 @@
                             <th>{{ _("Address") }}</th>
                             <th>{{ _("IP Version") }}</th>
                             <th>{{ _("Private") }}</th>
+                            <!-- <th>{{ _("Team") }}</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         {% for index, ip in enumerate(box.visible_ips) %}
-                            <tr>
-                                <td>{{ index + 1 }}</td>
-                                <td>{{ str(ip) }}</td>
-                                <td>{{ ip.version }}</td>
-                                <td>{{ str(ip.is_private) }}</td>
-                            </tr>
+                            {% if team.uuid == ip.team_id or ip.team_id is None %}
+                                <tr>
+                                    <td>{{ index + 1 }}</td>
+                                    <td>{{ str(ip) }}</td>
+                                    <td>{{ ip.version }}</td>
+                                    <td>{{ str(ip.is_private) }}</td>
+                                    <!-- <td>{{ str(team.uuid) }}</td> -->
+                                </tr>
+                            {% end %}
                         {% end %}
                     </tbody>
                 </table>

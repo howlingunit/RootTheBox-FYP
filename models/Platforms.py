@@ -4,6 +4,7 @@ import logging
 
 
 from models.User import User
+from models.Team import Team
 from models import dbsession
 
 class Platforms:
@@ -18,10 +19,21 @@ class Platforms:
     req = []
 
     for i in users:
-      req.append(i.uuid)
+      if not i.team_id:
+        continue
+      
+      team = Team.by_id(i.team_id)
+
+
+      req.append({
+        'user': i.uuid,
+        'team': team.uuid
+      })
 
     if not req:
       return
+    
+    print(req)
     
     r = requests.post(f'http://{cls.challenge_api}/create-platforms', json=req)
 

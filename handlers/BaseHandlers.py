@@ -269,8 +269,8 @@ class BaseHandler(RequestHandler):
         """Stop the game and all callbacks"""
         if self.application.settings["game_started"]:
             logging.info("The game is stopping ...")
-            Challenges.killChallenges()
             Platforms.killPlatforms()
+            Challenges.killChallenges()
             self.application.settings["game_started"] = False
             # add stop challenges here!!
             if self.application.settings["score_bots_callback"]._running:
